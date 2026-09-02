@@ -627,10 +627,10 @@ function App() {
             </a>
 
 
-            <a
-              href="#collection"
-            >
+            <a href="#collection">
+
               Shop on Amazon
+
             </a>
 
           </div>
@@ -686,6 +686,8 @@ function ContactForm({
 
   const [submitted, setSubmitted] = useState(false);
 
+  const [sending, setSending] = useState(false);
+
 
   // =========================================
   // FORM INPUT CHANGE
@@ -711,59 +713,77 @@ function ContactForm({
 
 
   // =========================================
-  // FORM SUBMIT
+  // FORM SUBMIT - SEND EMAIL
   // =========================================
 
-  function handleSubmit(event) {
+  const handleSubmit = async (event) => {
 
     event.preventDefault();
 
-
-    const orderData = {
-
-      ...formData,
-
-      product: product
-        ? product.name
-        : "General Enquiry",
-
-      productId: product
-        ? product.id
-        : null,
-
-      price: product
-        ? product.price
-        : null,
-
-    };
+    setSending(true);
 
 
-    console.log(
-      "FORM DATA READY FOR BACKEND:"
-    );
+    try {
 
-    console.log(orderData);
+      const response = await fetch(
+        "https://pranu-art-website-iutl.vercel.app/api/contact",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+
+            name: formData.name,
+
+            email: formData.email,
+
+            phone: formData.phone,
+
+            message: formData.message,
+
+          }),
+
+        }
+      );
 
 
-    /*
-      LATER WE CAN CONNECT THIS TO
-      YOUR NODE.JS BACKEND.
-
-      Example:
-
-      fetch("http://localhost:5000/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(orderData),
-      });
-    */
+      const data = await response.json();
 
 
-    setSubmitted(true);
+      if (data.success) {
 
-  }
+        setSubmitted(true);
+
+      } else {
+
+        alert(
+          data.message ||
+          "Failed to send message"
+        );
+
+      }
+
+    } catch (error) {
+
+      console.error(
+        "Contact form error:",
+        error
+      );
+
+      alert(
+        "Unable to send message. Please try again."
+      );
+
+    } finally {
+
+      setSending(false);
+
+    }
+
+  };
 
 
   // =========================================
@@ -1002,17 +1022,21 @@ function ContactForm({
                   : "How can we help you?"
               }
               rows="5"
+              required
             />
 
 
             <button
               type="submit"
               className="submit-button"
+              disabled={sending}
             >
 
-              {product
-                ? "Send Purchase Enquiry"
-                : "Send Message"}
+              {sending
+                ? "Sending..."
+                : product
+                  ? "Send Purchase Enquiry"
+                  : "Send Message"}
 
             </button>
 
