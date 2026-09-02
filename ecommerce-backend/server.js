@@ -2,8 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const { parse } = require("csv-parse/sync");
-// const nodemailer = require("nodemailer");
-// require("dotenv").config();
+const nodemailer = require("nodemailer");
+require("dotenv").config();
 
 const app = express();
 
@@ -23,14 +23,14 @@ const GOOGLE_SHEET_URL =
 // SMTP CONFIGURATION
 // =========================================
 
-// const transporter = nodemailer.createTransport({
-//   service: "gmail",
+const transporter = nodemailer.createTransport({
+  service: "gmail",
 
-//   auth: {
-//     user: process.env.SMTP_EMAIL,
-//     pass: process.env.SMTP_PASSWORD,
-//   },
-// });
+  auth: {
+    user: process.env.SMTP_EMAIL,
+    pass: process.env.SMTP_PASSWORD,
+  },
+});
 
 
 // =========================================
@@ -38,7 +38,7 @@ const GOOGLE_SHEET_URL =
 // =========================================
 
 app.get("/", (req, res) => {
-  res.send("Artora backend is running!");
+  res.send("PranuArt backend is running!");
 });
 
 
@@ -82,74 +82,74 @@ app.get("/api/products", async (req, res) => {
 // CONTACT FORM
 // =========================================
 
-// app.post("/api/contact", async (req, res) => {
-//   try {
-//     const {
-//       name,
-//       email,
-//       phone,
-//       message,
-//     } = req.body;
+app.post("/api/contact", async (req, res) => {
+  try {
+    const {
+      name,
+      email,
+      phone,
+      message,
+    } = req.body;
 
 
-//     // Check required fields
-//     if (!name || !email || !message) {
-//       return res.status(400).json({
-//         success: false,
-//         message: "Name, email and message are required",
-//       });
-//     }
+    // Check required fields
+    if (!name || !email || !message) {
+      return res.status(400).json({
+        success: false,
+        message: "Name, email and message are required",
+      });
+    }
 
 
-//     // Email details
-//     const mailOptions = {
-//       from: process.env.SMTP_EMAIL,
+    // Email details
+    const mailOptions = {
+      from: process.env.SMTP_EMAIL,
 
-//       to: process.env.ENQUIRY_EMAIL,
+      to: process.env.ENQUIRY_EMAIL,
 
-//       subject: `New Contact Message from ${name}`,
+      subject: `New Contact Message from ${name}`,
 
-//       text: `
-// New Contact Form Message
-// ========================
+      text: `
+New Contact Form Message
+========================
 
-// Name:
-// ${name}
+Name:
+${name}
 
-// Email:
-// ${email}
+Email:
+${email}
 
-// Phone:
-// ${phone || "Not provided"}
+Phone:
+${phone || "Not provided"}
 
-// Message:
-// ${message}
+Message:
+${message}
 
-// ========================
-// This message was sent from the Artora website.
-//       `,
-//     };
-
-
-//     // Send email
-//     await transporter.sendMail(mailOptions);
+========================
+This message was sent from the Artora website.
+      `,
+    };
 
 
-//     // Send success response
-//     res.json({
-//       success: true,
-//       message: "Message sent successfully",
-//     });
+    // Send email
+    await transporter.sendMail(mailOptions);
 
-//   } catch (error) {
-//     console.error("SMTP Error:", error);
 
-//     res.status(500).json({
-//       success: false,
-//       message: "Failed to send message",
-//     });
-//   }
-// });
+    // Send success response
+    res.json({
+      success: true,
+      message: "Message sent successfully",
+    });
+
+  } catch (error) {
+    console.error("SMTP Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to send message",
+    });
+  }
+});
 
 
 // =========================================
