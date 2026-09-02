@@ -26,7 +26,7 @@ function App() {
 
   useEffect(() => {
 
-    fetch("http://localhost:5000/api/products")
+    fetch("https://pranu-art-website-iutl.vercel.app/api/products")
 
       .then((response) => response.json())
 
