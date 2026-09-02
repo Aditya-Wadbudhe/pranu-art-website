@@ -26,7 +26,7 @@ function App() {
 
   useEffect(() => {
 
-    fetch("https://pranu-art-website-iutl.vercel.app/api/products")
+    fetch("https://pranu-art-website-4af7.vercel.app/api/products")
 
       .then((response) => response.json())
 
@@ -726,7 +726,7 @@ function ContactForm({
     try {
 
       const response = await fetch(
-        "https://pranu-art-website-iutl.vercel.app/api/contact",
+        "https://pranu-art-website-4af7.vercel.app/api/contact",
         {
           method: "POST",
 
