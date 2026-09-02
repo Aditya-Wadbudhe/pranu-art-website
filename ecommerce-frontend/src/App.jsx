@@ -1,58 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 import heroArt from "./assets/hero-art.jpeg";
-import painting1 from "./assets/painting1.jpeg";
-import painting2 from "./assets/painting2.jpeg";
-import painting3 from "./assets/painting3.jpeg";
-import painting4 from "./assets/painting4.jpeg";
-import painting5 from "./assets/painting5.jpeg";
-import painting6 from "./assets/painting6.jpeg";
 import artistImage from "./assets/artist.jpeg";
+
 import {
   FaInstagram,
   FaFacebookF,
   FaWhatsapp,
 } from "react-icons/fa";
-
-const products = [
-  {
-    id: 1,
-    name: "Golden Sunset",
-    price: 8500,
-    image: painting1,
-  },
-  {
-    id: 2,
-    name: "Blue Dreams",
-    price: 9500,
-    image: painting2,
-  },
-  {
-    id: 3,
-    name: "Classic Portrait",
-    price: 12000,
-    image: painting3,
-  },
-  {
-    id: 4,
-    name: "Classic Portrait",
-    price: 12000,
-    image: painting4,
-  },
-  {
-    id: 5,
-    name: "Classic Portrait",
-    price: 12000,
-    image: painting5,
-  },
-  {
-    id: 6,
-    name: "Classic Portrait",
-    price: 12000,
-    image: painting6,
-  },
-];
 
 
 function App() {
@@ -61,54 +17,111 @@ function App() {
 
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  const [products, setProducts] = useState([]);
+
+
+  // =========================================
+  // GET PRODUCTS FROM BACKEND
+  // =========================================
+
+  useEffect(() => {
+
+    fetch("http://localhost:5000/api/products")
+
+      .then((response) => response.json())
+
+      .then((data) => {
+
+        console.log("Products received:", data);
+
+        setProducts(data);
+
+      })
+
+      .catch((error) => {
+
+        console.error(
+          "Error fetching products:",
+          error
+        );
+
+      });
+
+  }, []);
+
+
+  // =========================================
+  // OPEN CONTACT / PURCHASE FORM
+  // =========================================
 
   function openBuyForm(product) {
+
     setSelectedProduct(product);
+
     setShowContact(true);
 
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
+
   }
 
 
   function openContactForm() {
+
     setSelectedProduct(null);
+
     setShowContact(true);
 
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
+
   }
 
 
+  // =========================================
+  // GO BACK HOME
+  // =========================================
+
   function goHome() {
+
     setShowContact(false);
+
     setSelectedProduct(null);
 
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
+
   }
 
 
+  // =========================================
+  // SHOW CONTACT FORM
+  // =========================================
+
   if (showContact) {
+
     return (
       <ContactForm
         product={selectedProduct}
         onBack={goHome}
       />
     );
+
   }
 
 
   return (
     <>
 
-      {/* NAVIGATION */}
+      {/* =========================================
+          NAVIGATION
+      ========================================= */}
 
       <nav className="navbar">
 
@@ -118,6 +131,7 @@ function App() {
         >
           Pranu Art Gallery
         </div>
+
 
         <div className="nav-links">
 
@@ -141,62 +155,83 @@ function App() {
 
       </nav>
 
-      {/* Sticky social */}
+
+      {/* =========================================
+          SOCIAL SIDEBAR
+      ========================================= */}
 
       <div className="social-sidebar">
 
-      <a
-        href="https://instagram.com/yourusername"
-        target="_blank"
-        rel="noreferrer"
-        aria-label="Instagram"
-      >
-        <FaInstagram/>
-      </a>
+        <a
+          href="https://instagram.com/yourusername"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Instagram"
+        >
+          <FaInstagram />
+        </a>
 
-      <a
-        href="https://facebook.com/yourusername"
-        target="_blank"
-        rel="noreferrer"
-        aria-label="Facebook"
-      >
-        <FaFacebookF/>
-      </a>
 
-      <a
-        href="https://wa.me/919876543210"
-        target="_blank"
-        rel="noreferrer"
-        aria-label="WhatsApp"
-      >
-        <FaWhatsapp/>
-      </a>
+        <a
+          href="https://facebook.com/yourusername"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Facebook"
+        >
+          <FaFacebookF />
+        </a>
+
+
+        <a
+          href="https://wa.me/919876543210"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="WhatsApp"
+        >
+          <FaWhatsapp />
+        </a>
 
       </div>
 
 
-      {/* HERO */}
+      {/* =========================================
+          HERO
+      ========================================= */}
 
-      <section className="hero" id="home">
+      <section
+        className="hero"
+        id="home"
+      >
 
         <div className="hero-content">
 
-          <p>ORIGINAL ARTWORK</p>
+          <p>
+            ORIGINAL ARTWORK
+          </p>
+
 
           <h1>
+
             Art that tells
             <br />
             your story.
+
           </h1>
 
+
           <span>
+
             Discover beautiful paintings and portraits
             created to bring emotion and character
             to your space.
+
           </span>
 
+
           <a href="#collection">
+
             Explore Collection
+
           </a>
 
         </div>
@@ -214,7 +249,9 @@ function App() {
       </section>
 
 
-      {/* COLLECTION */}
+      {/* =========================================
+          COLLECTION
+      ========================================= */}
 
       <section
         className="collection"
@@ -226,6 +263,7 @@ function App() {
           <p>
             FEATURED COLLECTION
           </p>
+
 
           <h2>
             Paintings & Portraits
@@ -243,6 +281,8 @@ function App() {
               key={product.id}
             >
 
+              {/* PRODUCT IMAGE */}
+
               <div className="product-image">
 
                 <img
@@ -253,21 +293,33 @@ function App() {
               </div>
 
 
+              {/* PRODUCT NAME */}
+
               <h3>
                 {product.name}
               </h3>
 
 
+              {/* PRODUCT PRICE */}
+
               <p>
-                ₹{product.price.toLocaleString("en-IN")}
+                ₹
+                {Number(product.price).toLocaleString(
+                  "en-IN"
+                )}
               </p>
 
 
-              <button
-                onClick={() => openBuyForm(product)}
+              {/* AMAZON BUTTON */}
+
+              <a
+                href={product.amazonUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="buy-button"
               >
-                Buy Now
-              </button>
+                Buy on Amazon
+              </a>
 
             </div>
 
@@ -278,7 +330,9 @@ function App() {
       </section>
 
 
-      {/* ABOUT ARTIST */}
+      {/* =========================================
+          ABOUT ARTIST
+      ========================================= */}
 
       <section
         className="about-artist"
@@ -301,40 +355,73 @@ function App() {
             ABOUT THE ARTIST
           </p>
 
+
           <h2>
+
             Every painting
             <br />
             begins with a story.
+
           </h2>
 
+
           <p className="artist-description">
+
             Art is more than something beautiful
             to look at. It is a feeling, a memory,
             and a moment captured on canvas.
+
           </p>
 
+
           <p className="artist-description">
+
             Each artwork is created with patience,
             imagination and a deep love for the
             little details that make every person
             and every moment unique.
+
           </p>
+
 
           <div className="artist-highlights">
 
             <div>
-              <strong>01</strong>
-              <span>Original Artwork</span>
+
+              <strong>
+                01
+              </strong>
+
+              <span>
+                Original Artwork
+              </span>
+
             </div>
 
-            <div>
-              <strong>02</strong>
-              <span>Handcrafted</span>
-            </div>
 
             <div>
-              <strong>03</strong>
-              <span>Custom Portraits</span>
+
+              <strong>
+                02
+              </strong>
+
+              <span>
+                Handcrafted
+              </span>
+
+            </div>
+
+
+            <div>
+
+              <strong>
+                03
+              </strong>
+
+              <span>
+                Custom Portraits
+              </span>
+
             </div>
 
           </div>
@@ -344,7 +431,9 @@ function App() {
       </section>
 
 
-      {/* CONTACT */}
+      {/* =========================================
+          CONTACT
+      ========================================= */}
 
       <section
         className="contact-section"
@@ -357,16 +446,22 @@ function App() {
             GET IN TOUCH
           </p>
 
+
           <h2>
+
             Have an artwork
             <br />
             in mind?
+
           </h2>
 
+
           <p>
+
             Looking for an original painting,
             custom portrait, or something
             special for your space?
+
           </p>
 
         </div>
@@ -375,12 +470,17 @@ function App() {
         <div className="contact-box">
 
           <h3>
+
             Let's create something
             <br />
             meaningful.
+
           </h3>
 
-          <button onClick={openContactForm}>
+
+          <button
+            onClick={openContactForm}
+          >
             Contact Us
           </button>
 
@@ -389,114 +489,174 @@ function App() {
       </section>
 
 
-      {/* FOOTER */}
+      {/* =========================================
+          FOOTER
+      ========================================= */}
 
       <footer className="footer">
 
-      {/* BRAND */}
-      <div className="footer-brand">
-        <h2>Pranu Art Gallery</h2>
 
-      <p>
-        Original paintings and portraits
-        created with passion and care.
-      </p>
-      </div>
+        {/* BRAND */}
+
+        <div className="footer-brand">
+
+          <h2>
+            Pranu Art Gallery
+          </h2>
 
 
-      {/* FOOTER LINKS */}
-      <div className="footer-links">
+          <p>
 
-        {/* EXPLORE */}
-        <div className="footer-column">
-          <h4>EXPLORE</h4>
+            Original paintings and portraits
+            created with passion and care.
 
-          <a href="#home">Home</a>
+          </p>
 
-          <a href="#collection">
-            Collection
-          </a>
-
-          <a href="#about">
-            About
-          </a>
-
-          <a href="#contact">
-            Contact
-          </a>
         </div>
 
 
-        {/* CONNECT */}
-        <div className="footer-column">
-          <h4>CONNECT</h4>
+        {/* FOOTER LINKS */}
 
-          <a
-            href="https://instagram.com/yourusername"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Instagram
-          </a>
+        <div className="footer-links">
 
-          <a href="tel:+919876543210">
-            +91 98765 43210
-          </a>
 
-          <a href="mailto:hello@artora.com">
-            hello@artora.com
-          </a>
+          {/* EXPLORE */}
+
+          <div className="footer-column">
+
+            <h4>
+              EXPLORE
+            </h4>
+
+
+            <a href="#home">
+              Home
+            </a>
+
+
+            <a href="#collection">
+              Collection
+            </a>
+
+
+            <a href="#about">
+              About
+            </a>
+
+
+            <a href="#contact">
+              Contact
+            </a>
+
+          </div>
+
+
+          {/* CONNECT */}
+
+          <div className="footer-column">
+
+            <h4>
+              CONNECT
+            </h4>
+
+
+            <a
+              href="https://instagram.com/yourusername"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Instagram
+            </a>
+
+
+            <a href="tel:+919876543210">
+
+              +91 98765 43210
+
+            </a>
+
+
+            <a href="mailto:hello@artora.com">
+
+              hello@artora.com
+
+            </a>
+
+          </div>
+
+
+          {/* ADDRESS */}
+
+          <div className="footer-column">
+
+            <h4>
+              ADDRESS
+            </h4>
+
+
+            <span>
+              Artora Studio
+            </span>
+
+
+            <span>
+              Hyderabad, Telangana
+            </span>
+
+
+            <span>
+              India
+            </span>
+
+          </div>
+
+
+          {/* SHOP */}
+
+          <div className="footer-column">
+
+            <h4>
+              SHOP
+            </h4>
+
+
+            <a href="#collection">
+
+              Featured Collection
+
+            </a>
+
+
+            <a
+              href="#collection"
+            >
+              Shop on Amazon
+            </a>
+
+          </div>
+
         </div>
 
-         {/* ADDRESS */}
-        <div className="footer-column">
-          <h4>ADDRESS</h4>
+
+        {/* FOOTER BOTTOM */}
+
+        <div className="footer-bottom">
 
           <span>
-            Artora Studio
+
+            © 2026 Pranu Art Gallery.
+            All rights reserved.
+
           </span>
+
 
           <span>
-            Hyderabad, Telangana
+
+            Made with love for art.
+
           </span>
 
-          <span>
-            India
-          </span>
         </div>
-
-        {/* SHOP */}
-        <div className="footer-column">
-          <h4>SHOP</h4>
-
-          <a href="#collection">
-            Featured Collection
-          </a>
-
-          <a
-            href="YOUR_AMAZON_LINK"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Shop on Amazon
-          </a>
-        </div>
-
-      </div>
-
-
-      {/* BOTTOM */}
-      <div className="footer-bottom">
-
-        <span>
-          © 2026 Pranu Art Gallery. All rights reserved.
-        </span>
-
-        <span>
-          Made with love for art.
-        </span>
-
-      </div>
 
       </footer>
 
@@ -509,30 +669,50 @@ function App() {
    CONTACT / BUY FORM
 ========================================= */
 
-function ContactForm({ product, onBack }) {
+function ContactForm({
+  product,
+  onBack
+}) {
 
   const [formData, setFormData] = useState({
+
     name: "",
     email: "",
     phone: "",
     message: "",
+
   });
 
 
   const [submitted, setSubmitted] = useState(false);
 
 
+  // =========================================
+  // FORM INPUT CHANGE
+  // =========================================
+
   function handleChange(event) {
 
-    const { name, value } = event.target;
+    const {
+      name,
+      value
+    } = event.target;
+
 
     setFormData({
+
       ...formData,
+
       [name]: value,
+
     });
 
   }
 
+
+  // =========================================
+  // FORM SUBMIT
+  // =========================================
 
   function handleSubmit(event) {
 
@@ -540,6 +720,7 @@ function ContactForm({ product, onBack }) {
 
 
     const orderData = {
+
       ...formData,
 
       product: product
@@ -553,15 +734,22 @@ function ContactForm({ product, onBack }) {
       price: product
         ? product.price
         : null,
+
     };
 
 
-    console.log("FORM DATA READY FOR BACKEND:");
+    console.log(
+      "FORM DATA READY FOR BACKEND:"
+    );
+
     console.log(orderData);
 
 
     /*
-      LATER:
+      LATER WE CAN CONNECT THIS TO
+      YOUR NODE.JS BACKEND.
+
+      Example:
 
       fetch("http://localhost:5000/api/contact", {
         method: "POST",
@@ -574,12 +762,18 @@ function ContactForm({ product, onBack }) {
 
 
     setSubmitted(true);
+
   }
 
+
+  // =========================================
+  // SUCCESS MESSAGE
+  // =========================================
 
   if (submitted) {
 
     return (
+
       <div className="form-page">
 
         <div className="success-message">
@@ -588,31 +782,47 @@ function ContactForm({ product, onBack }) {
             THANK YOU
           </p>
 
+
           <h1>
+
             Your enquiry has
             <br />
             been received.
+
           </h1>
 
+
           <p>
+
             We have received your details.
             We will get back to you shortly.
+
           </p>
 
-          <button onClick={onBack}>
+
+          <button
+            onClick={onBack}
+          >
             Back to Home
           </button>
 
         </div>
 
       </div>
+
     );
 
   }
 
 
+  // =========================================
+  // CONTACT FORM
+  // =========================================
+
   return (
+
     <div className="form-page">
+
 
       <button
         className="back-button"
@@ -630,35 +840,47 @@ function ContactForm({ product, onBack }) {
         <div className="form-intro">
 
           <p className="section-label">
+
             {product
               ? "PURCHASE ENQUIRY"
               : "CONTACT US"}
+
           </p>
 
 
           <h1>
 
             {product ? (
+
               <>
+
                 Interested in
                 <br />
                 this artwork?
+
               </>
+
             ) : (
+
               <>
+
                 Let's talk
                 <br />
                 about art.
+
               </>
+
             )}
 
           </h1>
 
 
           <p>
+
             Fill in the form and tell us a
             little about what you're looking for.
             We'll get back to you shortly.
+
           </p>
 
 
@@ -673,18 +895,26 @@ function ContactForm({ product, onBack }) {
                 alt={product.name}
               />
 
+
               <div>
 
                 <p>
                   Selected Artwork
                 </p>
 
+
                 <h3>
                   {product.name}
                 </h3>
 
+
                 <span>
-                  ₹{product.price.toLocaleString("en-IN")}
+
+                  ₹
+                  {Number(
+                    product.price
+                  ).toLocaleString("en-IN")}
+
                 </span>
 
               </div>
@@ -701,17 +931,21 @@ function ContactForm({ product, onBack }) {
         <div className="form-card">
 
           <h2>
+
             {product
               ? "Purchase Enquiry"
               : "Contact Us"}
+
           </h2>
 
 
           <form onSubmit={handleSubmit}>
 
+
             <label>
               Full Name
             </label>
+
 
             <input
               type="text"
@@ -727,6 +961,7 @@ function ContactForm({ product, onBack }) {
               Email Address
             </label>
 
+
             <input
               type="email"
               name="email"
@@ -741,6 +976,7 @@ function ContactForm({ product, onBack }) {
               Phone Number
             </label>
 
+
             <input
               type="tel"
               name="phone"
@@ -754,6 +990,7 @@ function ContactForm({ product, onBack }) {
             <label>
               Message
             </label>
+
 
             <textarea
               name="message"
@@ -772,9 +1009,11 @@ function ContactForm({ product, onBack }) {
               type="submit"
               className="submit-button"
             >
+
               {product
                 ? "Send Purchase Enquiry"
                 : "Send Message"}
+
             </button>
 
           </form>
@@ -784,7 +1023,9 @@ function ContactForm({ product, onBack }) {
       </div>
 
     </div>
+
   );
+
 }
 
 
