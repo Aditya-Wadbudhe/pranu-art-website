@@ -8,6 +8,7 @@ import {
   FaInstagram,
   FaFacebookF,
   FaWhatsapp,
+  FaAmazon,
 } from "react-icons/fa";
 
 
@@ -163,7 +164,16 @@ function App() {
       <div className="social-sidebar">
 
         <a
-          href="https://instagram.com/yourusername"
+          href="https://www.amazon.in/l/27943762031?ie=UTF8&marketplaceID=A21TJRUUN4KGV&product=B0G4WTR3JR&me=A8JPPSOUI1HTR"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Amazon"
+        >
+          <FaAmazon />
+        </a>
+
+        <a
+          href="https://www.instagram.com/pranu_artgallery?igsi=MWVscjFpbmU5OHB5ag=="
           target="_blank"
           rel="noreferrer"
           aria-label="Instagram"
@@ -173,7 +183,7 @@ function App() {
 
 
         <a
-          href="https://facebook.com/yourusername"
+          href="https://www.facebook.com/share/1LfboLi2VQ/"
           target="_blank"
           rel="noreferrer"
           aria-label="Facebook"
@@ -183,7 +193,7 @@ function App() {
 
 
         <a
-          href="https://wa.me/919876543210"
+          href="https://wa.me/message/FERA344I7D4ML1"
           target="_blank"
           rel="noreferrer"
           aria-label="WhatsApp"
@@ -561,7 +571,7 @@ function App() {
 
 
             <a
-              href="https://instagram.com/yourusername"
+              href="https://www.instagram.com/pranu_artgallery?igsi=MWVscjFpbmU5OHB5ag=="
               target="_blank"
               rel="noreferrer"
             >
@@ -569,17 +579,16 @@ function App() {
             </a>
 
 
-            <a href="tel:+919876543210">
+            <a href="https://wa.me/message/FERA344I7D4ML1">
 
-              +91 98765 43210
+              +91 9960047414
 
             </a>
 
+            <a href="mailto:pranotiwalulkar@gmail.com">
 
-            <a href="mailto:hello@artora.com">
-
-              hello@artora.com
-
+              pranotiwalulkar@gmail.com
+              
             </a>
 
           </div>
@@ -595,17 +604,22 @@ function App() {
 
 
             <span>
-              Artora Studio
+              Vyanktesh Residency, 
             </span>
 
 
             <span>
-              Hyderabad, Telangana
+              Khat Rd, Rajni Nagar,
             </span>
 
 
             <span>
-              India
+              Bhandara, Maharashtra
+            </span>
+
+            
+            <span>
+              441904
             </span>
 
           </div>
@@ -627,7 +641,7 @@ function App() {
             </a>
 
 
-            <a href="#collection">
+            <a href="https://www.amazon.in/l/27943762031?ie=UTF8&marketplaceID=A21TJRUUN4KGV&product=B0G4WTR3JR&me=A8JPPSOUI1HTR">
 
               Shop on Amazon
 
