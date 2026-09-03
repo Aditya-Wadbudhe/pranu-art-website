@@ -431,29 +431,360 @@ The following areas should be tested:
 
 ---
 
+Yes. For a project README, the **Challenges Faced** section can be more detailed so it shows the actual development problems and how you solved them, without becoming too long.
+
+You can replace your current **🐛 Challenges Actually Faced** section with this:
+
+````markdown
 ## 🐛 Challenges Actually Faced
 
-### Dynamic Product Management
+During the development of Pranu Art Gallery, several challenges were faced while combining an artistic website design with ecommerce functionality.
 
-Managing artworks directly in React would require code changes whenever a product changes.
+### 1. Creating an Artistic Ecommerce Design
 
-### Artwork Image Management
+One of the main challenges was creating a website that looked like an art gallery instead of a regular ecommerce website.
 
-Artwork images can be large and are better managed separately from the application.
+A normal ecommerce design usually focuses on products, prices, and buttons. However, an art gallery also needs to create an emotional and visual experience.
 
-### Customer Enquiry Email
+The challenge was to balance:
 
-SMTP credentials should not be exposed in the frontend.
+```text
+Artistic Design
+      +
+Professional Website
+      +
+Ecommerce Usability
+````
 
-### Artistic + Ecommerce Design
+### Solution
 
-The website needed to look artistic while keeping the product collection easy to use.
+A dark gallery-style theme was created with:
 
-### Responsive Artwork Layout
+* Artistic backgrounds
+* Paint-inspired gradients
+* Brush effects
+* Large artwork images
+* Smooth transitions
+* Hover animations
+* Scroll-based animations
 
-Artwork images needed to look good on desktop, tablet, and mobile.
+At the same time, the collection section was kept clean and simple so customers could easily view the artwork, price, and buy option.
 
 ---
+
+### 2. Managing Artwork/Product Data
+
+Another challenge was deciding how to manage artwork information.
+
+Hardcoding every product directly inside React would make it difficult to update prices, artwork names, images, or Amazon links.
+
+For example, changing one artwork would require changing the frontend code.
+
+### Solution
+
+Google Sheets was used as a simple product data source.
+
+The workflow became:
+
+```text
+Google Sheets
+      ↓
+Node.js API
+      ↓
+React Frontend
+      ↓
+Product Cards
+```
+
+This allows product information to be managed separately from the frontend.
+
+---
+
+### 3. Managing Artwork Images
+
+Artwork images are an important part of the website and can also be large in size.
+
+Keeping all artwork images directly inside the React project could increase the project size and make image management difficult.
+
+### Solution
+
+Cloudinary was used for artwork image hosting.
+
+The image workflow is:
+
+```text
+Artwork
+   ↓
+Cloudinary
+   ↓
+Image URL
+   ↓
+Google Sheets
+   ↓
+Backend
+   ↓
+React
+```
+
+This keeps the application lightweight and makes artwork images easier to manage.
+
+---
+
+### 4. Connecting Frontend and Backend
+
+The React frontend and Node.js backend are separate parts of the application.
+
+The challenge was making sure the frontend could correctly communicate with the backend APIs.
+
+### Solution
+
+REST API endpoints were created for the required functionality.
+
+For example:
+
+```text
+React
+  ↓
+GET /api/products
+  ↓
+Node.js
+  ↓
+Product Data
+  ↓
+React
+```
+
+This separates the frontend UI from backend data handling.
+
+---
+
+### 5. Creating the Customer Enquiry System
+
+The website needed a way for customers to contact the gallery without exposing email credentials in the frontend.
+
+Sending emails directly from React would not be secure because SMTP credentials could potentially be exposed.
+
+### Solution
+
+The enquiry process was moved to the backend.
+
+```text
+Customer
+   ↓
+React Contact Form
+   ↓
+POST /api/contact
+   ↓
+Node.js
+   ↓
+Nodemailer
+   ↓
+SMTP
+   ↓
+Gallery Email
+```
+
+The frontend only sends the enquiry information to the backend.
+
+---
+
+### 6. Making Email Notifications Professional
+
+The email sent to the gallery needed to contain all customer information in a clear and professional format.
+
+A simple plain-text email could be difficult to read when multiple enquiries are received.
+
+### Solution
+
+A structured HTML email template was created containing:
+
+* Gallery name
+* Customer name
+* Customer email
+* Phone number
+* Customer message
+* Reply instructions
+
+The customer's email is also used as the `replyTo` address so the gallery can easily reply to the customer.
+
+---
+
+### 7. Connecting Artwork Purchasing to Amazon
+
+The website needed to provide a purchasing option without building a complete payment system.
+
+Building a complete ecommerce payment and order management system would require additional features such as:
+
+* Cart
+* Payments
+* Orders
+* Payment verification
+* Order tracking
+
+### Solution
+
+Amazon product links were used for purchasing.
+
+The workflow is:
+
+```text
+Customer
+   ↓
+View Artwork
+   ↓
+Click Buy
+   ↓
+Amazon Product Page
+   ↓
+Complete Purchase
+```
+
+This keeps the website simple while still providing customers with a purchasing option.
+
+---
+
+### 8. Creating Scroll-Based Animations
+
+Another challenge was making the website feel interactive while scrolling.
+
+The goal was to create movement in the artistic background and artwork sections without making the website difficult to use.
+
+### Solution
+
+CSS animations and scroll-based effects were implemented.
+
+These include:
+
+* Animated background elements
+* Paint effects
+* Brush-style decorations
+* Artwork movement
+* Image hover effects
+* Smooth transitions
+
+The animations are mainly handled through CSS so that additional JavaScript logic is not required.
+
+---
+
+### 9. Keeping Animations and Ecommerce Usability Balanced
+
+Too many animations can make an ecommerce website confusing or distracting.
+
+The challenge was to make the website visually interesting while keeping important actions such as viewing prices and clicking the Buy button clear.
+
+### Solution
+
+The animations were mainly used in:
+
+```text
+Hero
+About Artist
+Background
+Artwork Images
+```
+
+The collection/product cards were kept more structured and ecommerce-focused.
+
+This creates:
+
+```text
+Artistic Experience
+        ↓
+Easy Product Browsing
+        ↓
+Clear Purchase Action
+```
+
+---
+
+### 10. Responsive Artwork Display
+
+Artwork images need to look good on large screens as well as small mobile screens.
+
+A layout that looks good on desktop can easily become too large or crowded on mobile.
+
+### Solution
+
+Responsive CSS and media queries were used to adjust:
+
+* Product grid
+* Artwork size
+* Typography
+* Section spacing
+* Navigation
+* Contact form
+* Buttons
+
+The website was designed to work across:
+
+```text
+Desktop
+   ↓
+Tablet
+   ↓
+Mobile
+```
+
+---
+
+### 11. Managing Sensitive Configuration
+
+SMTP information contains sensitive credentials and should not be stored directly in frontend code or uploaded to GitHub.
+
+### Solution
+
+Environment variables were used for sensitive configuration.
+
+Example:
+
+```env
+SMTP_EMAIL=your-email@example.com
+SMTP_PASSWORD=your-password
+ENQUIRY_EMAIL=gallery-email@example.com
+```
+
+The `.env` file is excluded from Git using `.gitignore`.
+
+---
+
+### 12. Maintaining a Simple Project Structure
+
+The project contains several different technologies and integrations.
+
+Managing React, Node.js, Google Sheets, Cloudinary, Amazon, and SMTP together could make the project difficult to understand.
+
+### Solution
+
+The application was separated into clear responsibilities:
+
+```text
+Frontend
+   ↓
+React UI
+
+Backend
+   ↓
+Node.js API
+
+Product Data
+   ↓
+Google Sheets
+
+Images
+   ↓
+Cloudinary
+
+Purchase
+   ↓
+Amazon
+
+Enquiries
+   ↓
+Nodemailer + SMTP
+```
+
+This makes the overall application easier to understand and maintain.
+
 
 ## 💡 Solutions Implemented
 
