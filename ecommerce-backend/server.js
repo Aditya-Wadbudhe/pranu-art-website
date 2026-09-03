@@ -106,6 +106,7 @@ app.post("/api/contact", async (req, res) => {
       from: process.env.SMTP_EMAIL,
 
       to: process.env.ENQUIRY_EMAIL,
+      replyTo: email,
 
       subject: `New Contact Message from ${name}`,
 
@@ -126,7 +127,7 @@ Message:
 ${message}
 
 ========================
-This message was sent from the Artora website.
+This message was sent from the Pranu Art Gallery website.
       `,
     };
 
