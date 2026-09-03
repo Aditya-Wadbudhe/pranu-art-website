@@ -431,11 +431,6 @@ The following areas should be tested:
 
 ---
 
-Yes. For a project README, the **Challenges Faced** section can be more detailed so it shows the actual development problems and how you solved them, without becoming too long.
-
-You can replace your current **🐛 Challenges Actually Faced** section with this:
-
-````markdown
 ## 🐛 Challenges Actually Faced
 
 During the development of Pranu Art Gallery, several challenges were faced while combining an artistic website design with ecommerce functionality.
