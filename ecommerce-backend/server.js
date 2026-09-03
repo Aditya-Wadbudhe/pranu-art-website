@@ -103,33 +103,195 @@ app.post("/api/contact", async (req, res) => {
 
     // Email details
     const mailOptions = {
-      from: process.env.SMTP_EMAIL,
+    from: process.env.SMTP_EMAIL,
+    to: process.env.ENQUIRY_EMAIL,
+    replyTo: email,
 
-      to: process.env.ENQUIRY_EMAIL,
-      replyTo: email,
+    subject: `New Enquiry from ${name} | Pranu Art Gallery`,
 
-      subject: `New Contact Message from ${name}`,
+    html: `
+      <div style="
+        margin: 0;
+        padding: 30px 15px;
+        background: #f4f0e9;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #29251f;
+      ">
 
-      text: `
-New Contact Form Message
-========================
+        <div style="
+          max-width: 650px;
+          margin: 0 auto;
+          background: #ffffff;
+          border: 1px solid #e2ddd5;
+        ">
 
-Name:
-${name}
+          <!-- Header -->
+          <div style="
+            padding: 28px 30px;
+            background: #171512;
+            text-align: center;
+          ">
+            <h1 style="
+              margin: 0;
+              color: #f4eee5;
+              font-size: 24px;
+              letter-spacing: 2px;
+            ">
+              PRANU ART GALLERY
+            </h1>
 
-Email:
-${email}
+            <p style="
+              margin: 8px 0 0;
+              color: #c9a66b;
+              font-size: 12px;
+              letter-spacing: 1.5px;
+            ">
+              NEW CUSTOMER ENQUIRY
+            </p>
+          </div>
 
-Phone:
-${phone || "Not provided"}
+          <!-- Main Content -->
+          <div style="padding: 35px;">
 
-Message:
-${message}
+            <p style="
+              margin: 0 0 25px;
+              font-size: 16px;
+              line-height: 1.6;
+            ">
+              A new customer has submitted an enquiry through
+              the Pranu Art Gallery website.
+            </p>
 
-========================
-This message was sent from the Pranu Art Gallery website.
-      `,
-    };
+            <!-- Customer Details -->
+            <h2 style="
+              margin: 0 0 15px;
+              font-size: 14px;
+              color: #9a7847;
+              letter-spacing: 1px;
+              text-transform: uppercase;
+            ">
+              Customer Details
+            </h2>
+
+            <table style="
+              width: 100%;
+              border-collapse: collapse;
+              margin-bottom: 30px;
+            ">
+
+              <tr>
+                <td style="
+                  padding: 12px 0;
+                  color: #777;
+                  width: 100px;
+                  border-bottom: 1px solid #eee;
+                ">
+                  Name
+                </td>
+
+                <td style="
+                  padding: 12px 0;
+                  font-weight: 600;
+                  border-bottom: 1px solid #eee;
+                ">
+                  ${name}
+                </td>
+              </tr>
+
+              <tr>
+                <td style="
+                  padding: 12px 0;
+                  color: #777;
+                  border-bottom: 1px solid #eee;
+                ">
+                  Email
+                </td>
+
+                <td style="
+                  padding: 12px 0;
+                  border-bottom: 1px solid #eee;
+                ">
+                  ${email}
+                </td>
+              </tr>
+
+              <tr>
+                <td style="
+                  padding: 12px 0;
+                  color: #777;
+                ">
+                  Phone
+                </td>
+
+                <td style="
+                  padding: 12px 0;
+                ">
+                  ${phone || "Not provided"}
+                </td>
+              </tr>
+
+            </table>
+
+            <!-- Message -->
+            <h2 style="
+              margin: 0 0 15px;
+              font-size: 14px;
+              color: #9a7847;
+              letter-spacing: 1px;
+              text-transform: uppercase;
+            ">
+              Customer Message
+            </h2>
+
+            <div style="
+              padding: 20px;
+              background: #f7f3ed;
+              border-left: 4px solid #c9a66b;
+              line-height: 1.7;
+              font-size: 15px;
+              white-space: pre-line;
+            ">
+              ${message}
+            </div>
+
+            <!-- Reply Notice -->
+            <div style="
+              margin-top: 30px;
+              padding-top: 20px;
+              border-top: 1px solid #e5e0d8;
+            ">
+              <p style="
+                margin: 0;
+                color: #777;
+                font-size: 13px;
+                line-height: 1.6;
+              ">
+                <strong>Reply directly to this email</strong>
+                to respond to ${name}.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Footer -->
+          <div style="
+            padding: 20px 30px;
+            background: #171512;
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+            line-height: 1.6;
+          ">
+            Pranu Art Gallery
+            <br>
+            Website Enquiry Notification
+          </div>
+
+        </div>
+
+      </div>
+    `,
+  };
 
 
     // Send email
