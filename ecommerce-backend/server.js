@@ -104,7 +104,14 @@ app.post("/api/contact", async (req, res) => {
     // Email details
     const mailOptions = {
     from: process.env.SMTP_EMAIL,
-    to: process.env.ENQUIRY_EMAIL,
+
+    to: [
+      process.env.ENQUIRY_EMAIL,
+      process.env.SALES_EMAIL,
+      process.env.DEVELOPER_EMAIL,
+      process.env.MANAGER_EMAIL,
+    ],
+
     replyTo: email,
 
     subject: `New Enquiry from ${name} | Pranu Art Gallery`,
